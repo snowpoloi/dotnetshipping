@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using CsvHelper;
+using Microsoft.EntityFrameworkCore;
 
 namespace ShippingCalculator.Controllers
 {
@@ -18,9 +19,10 @@ namespace ShippingCalculator.Controllers
             _context = context;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var postalCodes = await _context.PostalCodes.ToListAsync();
+            return View(postalCodes);
         }
 
         [HttpPost]
@@ -40,6 +42,89 @@ namespace ShippingCalculator.Controllers
             }
 
             return RedirectToAction(nameof(Index));
+        }
+
+        // GET: PostalCodes/Edit/5
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var postalCode = await _context.PostalCodes.FindAsync(id);
+            if (postalCode == null)
+            {
+                return NotFound();
+            }
+            return View(postalCode);
+        }
+
+        // POST: PostalCodes/Edit/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Postal,Location,Nomos")] PostalCode postalCode)
+        {
+            if (id != postalCode.Id)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(postalCode);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!PostalCodeExists(postalCode.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            return View(postalCode);
+        }
+
+        // GET: PostalCodes/Delete/5
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var postalCode = await _context.PostalCodes
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (postalCode == null)
+            {
+                return NotFound();
+            }
+
+            return View(postalCode);
+        }
+
+        // POST: PostalCodes/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var postalCode = await _context.PostalCodes.FindAsync(id);
+            _context.PostalCodes.Remove(postalCode);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
+        private bool PostalCodeExists(int id)
+        {
+            return _context.PostalCodes.Any(e => e.Id == id);
         }
     }
 }

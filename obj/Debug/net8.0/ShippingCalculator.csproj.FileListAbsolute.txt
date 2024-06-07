@@ -126,3 +126,4 @@
 /var/www/shippingcalculator/ShippingCalculator/bin/Debug/net8.0/runtimes/win/lib/netcoreapp3.0/System.Windows.Extensions.dll
 /var/www/shippingcalculator/ShippingCalculator/obj/Debug/net8.0/ShippingCalculator.csproj.CopyComplete
 /var/www/shippingcalculator/ShippingCalculator/bin/Debug/net8.0/CsvHelper.dll
+/var/www/shippingcalculator/ShippingCalculator/obj/Debug/net8.0/ShippingCalculator.sourcelink.json
