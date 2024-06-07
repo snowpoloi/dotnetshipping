@@ -1,0 +1,12 @@
+@{
+    ViewData["Title"] = "Import Postal Codes";
+}
+
+<h2>Import Postal Codes</h2>
+
+<form asp-action="ImportCsv" method="post" enctype="multipart/form-data">
+    <div class="form-group">
+        <input type="file" name="file" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-primary">Import</button>
+</form>

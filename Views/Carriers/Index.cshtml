@@ -1,0 +1,33 @@
+@model IEnumerable<ShippingCalculator.Models.Carrier>
+
+<h2>Carriers</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Max Length</th>
+            <th>Max Width</th>
+            <th>Max Height</th>
+            <th>Max Weight</th>
+            <th>Max Cubic</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var carrier in Model)
+        {
+            <tr>
+                <td>@carrier.Id</td>
+                <td>@carrier.Name</td>
+                <td>@carrier.MaxLength</td>
+                <td>@carrier.MaxWidth</td>
+                <td>@carrier.MaxHeight</td>
+                <td>@carrier.MaxWeight</td>
+                <td>@carrier.MaxCubic</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a href="/Carriers/Create" class="btn btn-primary">Create New Carrier</a>

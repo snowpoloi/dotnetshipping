@@ -1,0 +1,29 @@
+@model IEnumerable<ShippingCalculator.Models.Offer>
+
+<h2>Offers</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Carrier</th>
+            <th>Offer Type</th>
+            <th>Rate</th>
+            <th>Zone</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var offer in Model)
+        {
+            <tr>
+                <td>@offer.Id</td>
+                <td>@offer.Carrier</td>
+                <td>@offer.OfferType</td>
+                <td>@offer.Rate</td>
+                <td>@offer.Zone</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a href="/Offers/Create" class="btn btn-primary">Create New Offer</a>

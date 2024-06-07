@@ -1,0 +1,33 @@
+@model IEnumerable<ShippingCalculator.Models.Shipment>
+
+<h2>Shipments</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Length</th>
+            <th>Width</th>
+            <th>Height</th>
+            <th>Weight</th>
+            <th>Volumetric Weight</th>
+            <th>Created At</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var shipment in Model)
+        {
+            <tr>
+                <td>@shipment.Id</td>
+                <td>@shipment.Length</td>
+                <td>@shipment.Width</td>
+                <td>@shipment.Height</td>
+                <td>@shipment.Weight</td>
+                <td>@shipment.VolumetricWeight</td>
+                <td>@shipment.CreatedAt</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a href="/Shipments/Create" class="btn btn-primary">Create New Shipment</a>

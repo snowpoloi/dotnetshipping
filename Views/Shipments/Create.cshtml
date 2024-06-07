@@ -1,0 +1,23 @@
+@model ShippingCalculator.Models.Shipment
+
+<h2>Create New Shipment</h2>
+
+<form asp-action="Create" method="post">
+    <div class="form-group">
+        <label asp-for="Length"></label>
+        <input asp-for="Length" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Width"></label>
+        <input asp-for="Width" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Height"></label>
+        <input asp-for="Height" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Weight"></label>
+        <input asp-for="Weight" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-primary">Create</button>
+</form>
