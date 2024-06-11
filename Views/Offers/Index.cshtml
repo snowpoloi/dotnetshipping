@@ -1,54 +1,77 @@
 @model IEnumerable<ShippingCalculator.Models.Offer>
 
-@{
+    @{
     ViewData["Title"] = "Offers";
+    }
+
+    <h2>Offers</h2>
+
+    <p>
+        <a asp-action="Create" class="btn btn-primary">Create New Offer</a>
+    </p>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().Carrier.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().OfferType)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().MinimumWeight)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().MaximumWeight)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().BaseCost)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().ExtraCostPerKg)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().MinimumShippingCost)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().CubicMeterCost)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model) {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Carrier.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OfferType)
+                </td>
+                <td>
+                    @item.MinimumWeight.ToString("F2")
+                </td>
+                <td>
+                    @item.MaximumWeight.ToString("F2")
+                </td>
+                <td>
+                    @item.BaseCost.ToString("F2")
+                </td>
+                <td>
+                    @item.ExtraCostPerKg?.ToString("F2") ?? "N/A"
+                </td>
+                <td>
+                    @item.MinimumShippingCost.ToString("F2")
+                </td>
+                <td>
+                    @item.CubicMeterCost.ToString("F2")
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning">Edit</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
 }
-
-<h2>Offers</h2>
-
-<p>
-    <a asp-action="Create" class="btn btn-primary">Create New Offer</a>
-</p>
-
-<table class="table">
-    <thead>
-        <tr>
-            <th>Carrier</th>
-            <th>Offer Type</th>
-            <th>Minimum Weight</th>
-            <th>Maximum Weight</th>
-            <th>Base Cost</th>
-            <th>Extra Cost per Kg</th>
-            <th>Minimum Shipping Cost</th>
-            <th>Cubic Meter Cost</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @if (item.Carrier != null)
-                {
-                    @item.Carrier.Name
-                }
-                else
-                {
-                    <span class="text-danger">No Carrier</span>
-                }
-            </td>
-            <td>@item.OfferType</td>
-            <td>@Math.Round(item.MinimumWeight,2)</td>
-            <td>@item.MaximumWeight</td>
-            <td>@item.BaseCost</td>
-            <td>@item.ExtraCostPerKg</td>
-            <td>@item.MinimumShippingCost</td>
-            <td>@item.CubicMeterCost</td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning">Edit</a>
-                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+        </tbody>
+    </table>
