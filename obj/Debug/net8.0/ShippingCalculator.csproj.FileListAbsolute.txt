@@ -128,3 +128,6 @@
 /var/www/shippingcalculator/ShippingCalculator/obj/Debug/net8.0/ShippingCalculator.genruntimeconfig.cache
 /var/www/shippingcalculator/ShippingCalculator/obj/Debug/net8.0/ref/ShippingCalculator.dll
 /var/www/shippingcalculator/ShippingCalculator/bin/Debug/net8.0/Newtonsoft.Json.dll
+C:\Users\snowp\Source\Repos\snowpoloi\dotnetshipping\obj\Debug\net8.0\ShippingCalculator.dll
+C:\Users\snowp\Source\Repos\snowpoloi\dotnetshipping\obj\Debug\net8.0\refint\ShippingCalculator.dll
+C:\Users\snowp\Source\Repos\snowpoloi\dotnetshipping\obj\Debug\net8.0\ShippingCalculator.pdb
