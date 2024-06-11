@@ -9,15 +9,16 @@ build_property.EnforceExtendedAnalyzerRules =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = ShippingCalculator
 build_property.RootNamespace = ShippingCalculator
-build_property.ProjectDir = C:\Users\snowp\Source\Repos\snowpoloi\dotnetshipping\
+build_property.ProjectDir = /var/www/shippingcalculator/ShippingCalculator/
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 8.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = C:\Users\snowp\Source\Repos\snowpoloi\dotnetshipping
+build_property.MSBuildProjectDirectory = /var/www/shippingcalculator/ShippingCalculator
 build_property._RazorSourceGeneratorDebug = 
 
+<<<<<<< Updated upstream
 [C:/Users/snowp/source/repos/snowpoloi/dotnetshipping/Views/Carriers/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2FycmllcnNcQ3JlYXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
@@ -85,3 +86,68 @@ build_metadata.AdditionalFiles.CssScope =
 [C:/Users/snowp/source/repos/snowpoloi/dotnetshipping/Views/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-st3pnpz629
+=======
+[/var/www/shippingcalculator/ShippingCalculator/Views/Carriers/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQ2FycmllcnMvQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/var/www/shippingcalculator/ShippingCalculator/Views/Carriers/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQ2FycmllcnMvSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/var/www/shippingcalculator/ShippingCalculator/Views/Home/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9JbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/var/www/shippingcalculator/ShippingCalculator/Views/Home/Privacy.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9Qcml2YWN5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/var/www/shippingcalculator/ShippingCalculator/Views/Offers/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvT2ZmZXJzL0NyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/var/www/shippingcalculator/ShippingCalculator/Views/Offers/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvT2ZmZXJzL0luZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/var/www/shippingcalculator/ShippingCalculator/Views/PostalCodes/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUG9zdGFsQ29kZXMvRGVsZXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/var/www/shippingcalculator/ShippingCalculator/Views/PostalCodes/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUG9zdGFsQ29kZXMvRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/var/www/shippingcalculator/ShippingCalculator/Views/PostalCodes/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvUG9zdGFsQ29kZXMvSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/var/www/shippingcalculator/ShippingCalculator/Views/Shared/Error.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL0Vycm9yLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/var/www/shippingcalculator/ShippingCalculator/Views/Shared/_ValidationScriptsPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL19WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/var/www/shippingcalculator/ShippingCalculator/Views/Shipments/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hpcG1lbnRzL0NyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/var/www/shippingcalculator/ShippingCalculator/Views/Shipments/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hpcG1lbnRzL0luZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/var/www/shippingcalculator/ShippingCalculator/Views/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvX1ZpZXdJbXBvcnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/var/www/shippingcalculator/ShippingCalculator/Views/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvX1ZpZXdTdGFydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/var/www/shippingcalculator/ShippingCalculator/Views/Shared/_Layout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL19MYXlvdXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = b-vbafnwu1ye
+>>>>>>> Stashed changes
