@@ -1,23 +1,151 @@
 @model ShippingCalculator.Models.Offer
 
-<h2>Create New Offer</h2>
+@{
+    ViewData["Title"] = "Create Offer";
+}
 
-<form asp-action="Create" method="post">
-    <div class="form-group">
-        <label asp-for="Carrier"></label>
-        <input asp-for="Carrier" class="form-control" />
+<h2>Create Offer</h2>
+
+<h4>Offer</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div class="form-group">
+                <label asp-for="CarrierId" class="control-label"></label>
+                <select asp-for="CarrierId" class="form-control" asp-items="ViewBag.Carriers"></select>
+                <span asp-validation-for="CarrierId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="OfferType" class="control-label"></label>
+                <select asp-for="OfferType" class="form-control" id="offerType">
+                    <option value="Weight">Προσφορά με κιλά</option>
+                    <option value="Cubic">Προσφορά με κυβικό</option>
+                </select>
+                <span asp-validation-for="OfferType" class="text-danger"></span>
+            </div>
+
+            <div id="weightOfferFields">
+                <div class="form-group">
+                    <label asp-for="MinimumWeight" class="control-label"></label>
+                    <input asp-for="MinimumWeight" class="form-control" />
+                    <span asp-validation-for="MinimumWeight" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="MaximumWeight" class="control-label"></label>
+                    <input asp-for="MaximumWeight" class="form-control" />
+                    <span asp-validation-for="MaximumWeight" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="BaseCost" class="control-label"></label>
+                    <input asp-for="BaseCost" class="form-control" />
+                    <span asp-validation-for="BaseCost" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ExtraCostPerKg" class="control-label"></label>
+                    <input asp-for="ExtraCostPerKg" class="form-control" />
+                    <span asp-validation-for="ExtraCostPerKg" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div id="cubicOfferFields" style="display:none;">
+                <div class="form-group">
+                    <label asp-for="MinimumShippingCost" class="control-label"></label>
+                    <input asp-for="MinimumShippingCost" class="form-control" />
+                    <span asp-validation-for="MinimumShippingCost" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="CubicMeterCost" class="control-label"></label>
+                    <input asp-for="CubicMeterCost" class="form-control" />
+                    <span asp-validation-for="CubicMeterCost" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Postal Codes</label>
+                <input type="text" id="searchPostalCodes" class="form-control" placeholder="Search for postal codes" />
+                <ul id="postalCodeResults" class="list-group"></ul>
+                <button type="button" id="selectAllPostalCodes" class="btn btn-secondary">Select All</button>
+            </div>
+
+            <div class="form-group">
+                <label>Selected Postal Codes</label>
+                <ul id="selectedPostalCodes" class="list-group"></ul>
+                <button type="button" id="removeAllPostalCodes" class="btn btn-secondary">Remove All</button>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
     </div>
-    <div class="form-group">
-        <label asp-for="OfferType"></label>
-        <input asp-for="OfferType" class="form-control" />
-    </div>
-    <div class="form-group">
-        <label asp-for="Rate"></label>
-        <input asp-for="Rate" class="form-control" />
-    </div>
-    <div class="form-group">
-        <label asp-for="Zone"></label>
-        <input asp-for="Zone" class="form-control" />
-    </div>
-    <button type="submit" class="btn btn-primary">Create</button>
-</form>
+</div>
+
+@section Scripts {
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            function toggleOfferFields() {
+                if ($('#offerType').val() === 'Weight') {
+                    $('#weightOfferFields').show();
+                    $('#cubicOfferFields').hide();
+                } else {
+                    $('#weightOfferFields').hide();
+                    $('#cubicOfferFields').show();
+                }
+            }
+
+            $('#offerType').change(toggleOfferFields);
+            toggleOfferFields();
+
+            $('#searchPostalCodes').on('input', function () {
+                const searchTerm = $(this).val();
+                if (searchTerm.length > 2) {
+                    $.getJSON('/Offers/SearchPostalCodes', { term: searchTerm }, function (data) {
+                        $('#postalCodeResults').empty();
+                        $.each(data, function (index, postalCode) {
+                            $('#postalCodeResults').append(`<li class="list-group-item" data-id="${postalCode.id}">${postalCode.postal} - ${postalCode.location}</li>`);
+                        });
+                    });
+                } else {
+                    $('#postalCodeResults').empty();
+                }
+            });
+
+            $(document).on('click', '#postalCodeResults li', function () {
+                const postalCodeId = $(this).data('id');
+                const postalCodeText = $(this).text();
+                $('#selectedPostalCodes').append(`<li class="list-group-item" data-id="${postalCodeId}">${postalCodeText} <button type="button" class="btn btn-sm btn-danger float-right remove-postal-code">Remove</button></li>`);
+            });
+
+            $(document).on('click', '.remove-postal-code', function () {
+                $(this).parent().remove();
+            });
+
+            $('#selectAllPostalCodes').click(function () {
+                $('#postalCodeResults li').each(function () {
+                    const postalCodeId = $(this).data('id');
+                    const postalCodeText = $(this).text();
+                    $('#selectedPostalCodes').append(`<li class="list-group-item" data-id="${postalCodeId}">${postalCodeText} <button type="button" class="btn btn-sm btn-danger float-right remove-postal-code">Remove</button></li>`);
+                });
+                $('#postalCodeResults').empty();
+            });
+
+            $('#removeAllPostalCodes').click(function () {
+                $('#selectedPostalCodes').empty();
+            });
+
+            $('form').submit(function () {
+                const selectedPostalCodes = [];
+                $('#selectedPostalCodes li').each(function () {
+                    selectedPostalCodes.push($(this).data('id'));
+                });
+                $('<input>').attr({
+                    type: 'hidden',
+                    name: 'selectedPostalCodes',
+                    value: JSON.stringify(selectedPostalCodes)
+                }).appendTo('form');
+            });
+        });
+    </script>
+}

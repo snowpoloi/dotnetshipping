@@ -11,19 +11,28 @@ namespace ShippingCalculator.Models
 
         public DbSet<Offer> Offers { get; set; }
         public DbSet<Shipment> Shipments { get; set; }
-		public DbSet<Carrier> Carriers { get; set; }
-		public DbSet<PostalCode> PostalCodes { get; set; }
+        public DbSet<Carrier> Carriers { get; set; }
+        public DbSet<PostalCode> PostalCodes { get; set; }
+        public DbSet<PostalCodeOffer> PostalCodeOffers { get; set; }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<PostalCodeOffer>()
+                .HasKey(pco => new { pco.PostalCodeId, pco.OfferId });
+
+            modelBuilder.Entity<PostalCodeOffer>()
+                .HasOne(pco => pco.PostalCode)
+                .WithMany(pc => pc.PostalCodeOffers) // Ensure PostalCodeOffers is defined in PostalCode
+                .HasForeignKey(pco => pco.PostalCodeId);
+
+            modelBuilder.Entity<PostalCodeOffer>()
+                .HasOne(pco => pco.Offer)
+                .WithMany(o => o.PostalCodeOffers)
+                .HasForeignKey(pco => pco.OfferId);
+        }
     }
-
-    public class Offer
-	{
-    public int Id { get; set; }
-    public string? Carrier { get; set; }  // Nullable
-    public string? OfferType { get; set; }  // Nullable
-    public decimal Rate { get; set; }
-    public string? Zone { get; set; }  // Nullable
-	}
 
     public class Shipment
     {

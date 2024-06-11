@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore; // Added for DbUpdateConcurrencyException
 using ShippingCalculator.Models;
 using System.Collections.Generic;
 using System.Globalization;
@@ -6,7 +7,6 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using CsvHelper;
-using Microsoft.EntityFrameworkCore;
 
 namespace ShippingCalculator.Controllers
 {
@@ -19,40 +19,37 @@ namespace ShippingCalculator.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            var postalCodes = await _context.PostalCodes.ToListAsync();
-            return View(postalCodes);
+            return View(_context.PostalCodes.ToList());
+        }
+
+        public IActionResult Create()
+        {
+            return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> ImportCsv()
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(PostalCode postalCode)
         {
-            var file = Request.Form.Files[0];
-
-            if (file.Length > 0)
+            if (ModelState.IsValid)
             {
-                using (var reader = new StreamReader(file.OpenReadStream()))
-                using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
-                {
-                    var records = csv.GetRecords<PostalCode>().ToList();
-                    _context.PostalCodes.AddRange(records);
-                    await _context.SaveChangesAsync();
-                }
+                _context.Add(postalCode);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
             }
-
-            return RedirectToAction(nameof(Index));
+            return View(postalCode);
         }
 
-        // GET: PostalCodes/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public IActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var postalCode = await _context.PostalCodes.FindAsync(id);
+            var postalCode = _context.PostalCodes.Find(id);
             if (postalCode == null)
             {
                 return NotFound();
@@ -60,10 +57,9 @@ namespace ShippingCalculator.Controllers
             return View(postalCode);
         }
 
-        // POST: PostalCodes/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Postal,Location,Nomos")] PostalCode postalCode)
+        public async Task<IActionResult> Edit(int id, PostalCode postalCode)
         {
             if (id != postalCode.Id)
             {
@@ -93,16 +89,14 @@ namespace ShippingCalculator.Controllers
             return View(postalCode);
         }
 
-        // GET: PostalCodes/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public IActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var postalCode = await _context.PostalCodes
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var postalCode = _context.PostalCodes.Find(id);
             if (postalCode == null)
             {
                 return NotFound();
@@ -111,14 +105,16 @@ namespace ShippingCalculator.Controllers
             return View(postalCode);
         }
 
-        // POST: PostalCodes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var postalCode = await _context.PostalCodes.FindAsync(id);
-            _context.PostalCodes.Remove(postalCode);
-            await _context.SaveChangesAsync();
+            if (postalCode != null)
+            {
+                _context.PostalCodes.Remove(postalCode);
+                await _context.SaveChangesAsync();
+            }
             return RedirectToAction(nameof(Index));
         }
 
