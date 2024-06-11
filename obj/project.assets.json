@@ -114,7 +114,8 @@
       "Microsoft.CodeAnalysis.Analyzers/3.3.3": {
         "type": "package",
         "build": {
-          "build/_._": {}
+          "build/Microsoft.CodeAnalysis.Analyzers.props": {},
+          "build/Microsoft.CodeAnalysis.Analyzers.targets": {}
         }
       },
       "Microsoft.CodeAnalysis.Common/4.5.0": {
@@ -3827,6 +3828,7 @@
   "projectFileDependencyGroups": {
     "net8.0": [
       "CsvHelper >= 32.0.3",
+      "Microsoft.CodeAnalysis.Analyzers >= 3.3.3",
       "Microsoft.EntityFrameworkCore >= 8.0.6",
       "Microsoft.EntityFrameworkCore.Design >= 8.0.6",
       "MySql.Data >= 8.4.0",
@@ -3835,24 +3837,27 @@
     ]
   },
   "packageFolders": {
-    "/root/.nuget/packages/": {}
+    "C:\\Users\\snowp\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/var/www/shippingcalculator/ShippingCalculator/ShippingCalculator.csproj",
+      "projectUniqueName": "C:\\Users\\snowp\\source\\repos\\snowpoloi\\dotnetshipping\\ShippingCalculator.csproj",
       "projectName": "ShippingCalculator",
-      "projectPath": "/var/www/shippingcalculator/ShippingCalculator/ShippingCalculator.csproj",
-      "packagesPath": "/root/.nuget/packages/",
-      "outputPath": "/var/www/shippingcalculator/ShippingCalculator/obj/",
+      "projectPath": "C:\\Users\\snowp\\source\\repos\\snowpoloi\\dotnetshipping\\ShippingCalculator.csproj",
+      "packagesPath": "C:\\Users\\snowp\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\snowp\\source\\repos\\snowpoloi\\dotnetshipping\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/root/.nuget/NuGet/NuGet.Config"
+        "C:\\Users\\snowp\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
       ],
       "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -3865,6 +3870,11 @@
         "warnAsError": [
           "NU1605"
         ]
+      },
+      "restoreAuditProperties": {
+        "enableAudit": "true",
+        "auditLevel": "low",
+        "auditMode": "direct"
       }
     },
     "frameworks": {
@@ -3874,6 +3884,12 @@
           "CsvHelper": {
             "target": "Package",
             "version": "[32.0.3, )"
+          },
+          "Microsoft.CodeAnalysis.Analyzers": {
+            "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+            "suppressParent": "All",
+            "target": "Package",
+            "version": "[3.3.3, )"
           },
           "Microsoft.EntityFrameworkCore": {
             "target": "Package",
@@ -3917,7 +3933,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/8.0.105/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.300/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

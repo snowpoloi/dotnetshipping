@@ -26,76 +26,76 @@ public class OffersController : Controller
     }
 
     public IActionResult Create()
-{
-    ViewData["Carriers"] = new SelectList(_context.Carriers, "Id", "Name");
-    return View();
-	}
-	
-	[HttpPost]
-	[ValidateAntiForgeryToken]
-	public async Task<IActionResult> Create(Offer offer, string selectedPostalCodes)
-	{
-		if (offer == null)
-		{
-			_logger.LogError("Offer object is null");
-			return View(offer);
-		}
+    {
+        ViewData["Carriers"] = new SelectList(_context.Carriers, "Id", "Name");
+        return View();
+    }
 
-		var postalCodeIds = new List<int>();
-		if (!string.IsNullOrEmpty(selectedPostalCodes))
-		{
-			postalCodeIds = JsonConvert.DeserializeObject<List<int>>(selectedPostalCodes);
-		}
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Create(Offer offer, string selectedPostalCodes)
+    {
+        if (offer == null)
+        {
+            _logger.LogError("Offer object is null");
+            return View(offer);
+        }
 
-		_logger.LogInformation("Starting creation of a new offer with data: {@Offer}, selected postal codes: {@SelectedPostalCodes}", offer, postalCodeIds);
+        var postalCodeIds = new List<int>();
+        if (!string.IsNullOrEmpty(selectedPostalCodes))
+        {
+            postalCodeIds = JsonConvert.DeserializeObject<List<int>>(selectedPostalCodes);
+        }
 
-		// Remove validation for unused fields based on the offer type
-		if (offer.OfferType == "Weight")
-		{
-			ModelState.Remove(nameof(offer.MinimumShippingCost));
-			ModelState.Remove(nameof(offer.CubicMeterCost));
-		}
-		else if (offer.OfferType == "Cubic")
-		{
-			ModelState.Remove(nameof(offer.MinimumWeight));
-			ModelState.Remove(nameof(offer.MaximumWeight));
-			ModelState.Remove(nameof(offer.BaseCost));
-			ModelState.Remove(nameof(offer.ExtraCostPerKg));
-		}
+        _logger.LogInformation("Starting creation of a new offer with data: {@Offer}, selected postal codes: {@SelectedPostalCodes}", offer, postalCodeIds);
 
-		//if (!ModelState.IsValid)
-		//{
-			//_logger.LogWarning("Model state invalid when creating a new offer: {@Offer}", offer);
+        // Remove validation for unused fields based on the offer type
+        if (offer.OfferType == "Weight")
+        {
+            ModelState.Remove(nameof(offer.MinimumShippingCost));
+            ModelState.Remove(nameof(offer.CubicMeterCost));
+        }
+        else if (offer.OfferType == "Cubic")
+        {
+            ModelState.Remove(nameof(offer.MinimumWeight));
+            ModelState.Remove(nameof(offer.MaximumWeight));
+            ModelState.Remove(nameof(offer.BaseCost));
+            ModelState.Remove(nameof(offer.ExtraCostPerKg));
+        }
 
-			//foreach (var state in ModelState)
-			//{
-			//	foreach (var error in state.Value.Errors)
-			//	{
-			//		_logger.LogError("Model state error: {ErrorMessage}", error.ErrorMessage);
-			//	}
-			//}
+        if (!ModelState.IsValid)
+        {
+            _logger.LogWarning("Model state invalid when creating a new offer: {@Offer}", offer);
 
-			//ViewData["Carriers"] = new SelectList(_context.Carriers, "Id", "Name", offer.CarrierId);
-			//return View(offer);
-		//}
+            foreach (var state in ModelState)
+            {
+                foreach (var error in state.Value.Errors)
+                {
+                    _logger.LogError("Model state error: {ErrorMessage}", error.ErrorMessage);
+                }
+            }
 
-		_context.Add(offer);
-		await _context.SaveChangesAsync();
+            ViewData["Carriers"] = new SelectList(_context.Carriers, "Id", "Name", offer.CarrierId);
+            return View(offer);
+        }
 
-		foreach (var postalCodeId in postalCodeIds)
-		{
-			var postalCodeOffer = new PostalCodeOffer
-			{
-				OfferId = offer.Id,
-				PostalCodeId = postalCodeId
-			};
-			_context.PostalCodeOffers.Add(postalCodeOffer);
-		}
+        _context.Add(offer);
+        await _context.SaveChangesAsync();
 
-		await _context.SaveChangesAsync();
-		_logger.LogInformation("Successfully created a new offer with ID: {OfferId}", offer.Id);
-		return RedirectToAction(nameof(Index));
-	}
+        foreach (var postalCodeId in postalCodeIds)
+        {
+            var postalCodeOffer = new PostalCodeOffer
+            {
+                OfferId = offer.Id,
+                PostalCodeId = postalCodeId
+            };
+            _context.PostalCodeOffers.Add(postalCodeOffer);
+        }
+
+        await _context.SaveChangesAsync();
+        _logger.LogInformation("Successfully created a new offer with ID: {OfferId}", offer.Id);
+        return RedirectToAction(nameof(Index));
+    }
 
     public async Task<IActionResult> Edit(int? id)
     {
@@ -161,7 +161,6 @@ public class OffersController : Controller
         ViewData["Carriers"] = new SelectList(_context.Carriers, "Id", "Name", offer.CarrierId);
         return View(offer);
     }
-
     public async Task<IActionResult> Delete(int? id)
     {
         if (id == null)

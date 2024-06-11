@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ShippingCalculator")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+28addd721cb2ea7b00a128d7a776cdd686af7008")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+692b6caa5d6d8deafe7b039e7387852bc1eca899")]
 [assembly: System.Reflection.AssemblyProductAttribute("ShippingCalculator")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ShippingCalculator")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
