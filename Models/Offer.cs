@@ -10,7 +10,7 @@ namespace ShippingCalculator.Models
         [Required]
         public int CarrierId { get; set; }
 
-        [Required]
+       // [Required]
         public Carrier Carrier { get; set; }
 
         [Required]

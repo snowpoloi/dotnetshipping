@@ -25,14 +25,12 @@ public class OffersController : Controller
         return View(offers);
     }
 
-    [HttpGet]
-	public IActionResult Create()
-	{
-		ViewData["Carriers"] = new SelectList(_context.Carriers, "Id", "Name");
-		_logger.LogInformation("Carriers loaded for create form.");
-		return View();
+    public IActionResult Create()
+{
+    ViewData["Carriers"] = new SelectList(_context.Carriers, "Id", "Name");
+    return View();
 	}
-
+	
 	[HttpPost]
 	[ValidateAntiForgeryToken]
 	public async Task<IActionResult> Create(Offer offer, string selectedPostalCodes)
@@ -50,24 +48,36 @@ public class OffersController : Controller
 		}
 
 		_logger.LogInformation("Starting creation of a new offer with data: {@Offer}, selected postal codes: {@SelectedPostalCodes}", offer, postalCodeIds);
-		_logger.LogInformation("CarrierId: {CarrierId}", offer.CarrierId);
-		
-		if (!ModelState.IsValid)
+
+		// Remove validation for unused fields based on the offer type
+		if (offer.OfferType == "Weight")
 		{
-			_logger.LogWarning("Model state invalid when creating a new offer: {@Offer}", offer);
-
-			foreach (var state in ModelState)
-			{
-				foreach (var error in state.Value.Errors)
-				{
-					_logger.LogError("Model state error: {ErrorMessage}", error.ErrorMessage);
-				}
-			}
-
-			ViewData["Carriers"] = new SelectList(_context.Carriers, "Id", "Name", offer.CarrierId);
-			_logger.LogInformation("Carriers loaded (on post): {@Carriers}", ViewData["Carriers"]);
-			return View(offer);
+			ModelState.Remove(nameof(offer.MinimumShippingCost));
+			ModelState.Remove(nameof(offer.CubicMeterCost));
 		}
+		else if (offer.OfferType == "Cubic")
+		{
+			ModelState.Remove(nameof(offer.MinimumWeight));
+			ModelState.Remove(nameof(offer.MaximumWeight));
+			ModelState.Remove(nameof(offer.BaseCost));
+			ModelState.Remove(nameof(offer.ExtraCostPerKg));
+		}
+
+		//if (!ModelState.IsValid)
+		//{
+			//_logger.LogWarning("Model state invalid when creating a new offer: {@Offer}", offer);
+
+			//foreach (var state in ModelState)
+			//{
+			//	foreach (var error in state.Value.Errors)
+			//	{
+			//		_logger.LogError("Model state error: {ErrorMessage}", error.ErrorMessage);
+			//	}
+			//}
+
+			//ViewData["Carriers"] = new SelectList(_context.Carriers, "Id", "Name", offer.CarrierId);
+			//return View(offer);
+		//}
 
 		_context.Add(offer);
 		await _context.SaveChangesAsync();
@@ -86,6 +96,7 @@ public class OffersController : Controller
 		_logger.LogInformation("Successfully created a new offer with ID: {OfferId}", offer.Id);
 		return RedirectToAction(nameof(Index));
 	}
+
     public async Task<IActionResult> Edit(int? id)
     {
         if (id == null)
